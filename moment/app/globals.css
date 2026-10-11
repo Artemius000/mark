@@ -1,23 +1,29 @@
 @import "tailwindcss";
 
-/* Layout: dark studio hero with a pinned 3D teardown → manifesto → horizontal service rail → paper "vs dealer" sheet → process → booking → wordmark footer */
+/* Layout: cinematic 3D teardown → full-bleed workshop film → manifesto with inline photos →
+   photo service rail → parallax "this week in the bays" → paper sheet vs dealer → sticky process → booking → wordmark */
 @theme inline {
-  --color-carbon: #0c0d0f;
-  --color-graphite: #16181b;
-  --color-ash: #23262b;
-  --color-steel: #8d929a;
-  --color-fog: #b9bdc4;
-  --color-paper: #ecebe6;
-  --color-bone: #d8d5cd;
-  --color-gold: #d4a649;
-  --color-gold-deep: #9c7426;
-  --color-ok: #74c27a;
-  --color-warn: #e3a63c;
-  --color-bad: #e8634f;
+  --color-carbon: #09090a;
+  --color-graphite: #111214;
+  --color-ash: #1a1b1e;
+  --color-line: rgb(255 255 255 / 0.09);
+  --color-steel: #7d8087;
+  --color-fog: #a9abb0;
+  --color-paper: #efece6;
+  --color-bone: #dcd7cd;
+  --color-brass: #c6a15b;
+  --color-brass-deep: #8a6a33;
+  --color-ok: #7cc387;
+  --color-warn: #e2ad4f;
+  --color-bad: #e4705c;
 
-  --font-display: var(--font-tektur), "Arial Narrow", system-ui, sans-serif;
-  --font-sans: var(--font-onest), "Segoe UI", system-ui, sans-serif;
+  --font-display: var(--font-flex), "Arial", system-ui, sans-serif;
+  --font-sans: var(--font-flex), "Segoe UI", system-ui, sans-serif;
+  --font-serif: var(--font-serif), "Times New Roman", serif;
   --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+
+  --ease-premium: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
@@ -28,47 +34,96 @@ html {
   background: var(--color-carbon);
 }
 
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 body {
   background: var(--color-carbon);
   color: var(--color-paper);
   font-family: var(--font-sans);
+  font-variation-settings: "wdth" 100;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 ::selection {
-  background: var(--color-gold);
+  background: var(--color-brass);
   color: var(--color-carbon);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-gold);
-  outline-offset: 3px;
+  outline: 1px solid var(--color-brass);
+  outline-offset: 4px;
 }
 
-h1, h2, h3 {
+/* Extended display cut: wide, light, tight — the house voice. */
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 151, "opsz" 144;
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  text-transform: uppercase;
   text-wrap: balance;
+}
+.display-bold {
+  font-variation-settings: "wdth" 151, "opsz" 144;
+  font-weight: 700;
+}
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-variation-settings: normal;
 }
 
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-}
-
-.grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.07;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .tabular {
   font-variant-numeric: tabular-nums;
+}
+
+.hairline {
+  height: 1px;
+  background: var(--color-line);
+}
+
+/* SplitText line masks: give diacritics (Ё, Й) and descenders room inside the clip. */
+[data-reveal] > div {
+  padding-block: 0.14em 0.08em;
+  margin-block: -0.14em -0.08em;
+}
+
+/* Animated film grain over the whole page. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -4%); }
+  60% { transform: translate(-4%, -2%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
 }
 
 @keyframes marquee {
@@ -76,8 +131,20 @@ h1, h2, h3 {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(116 194 122 / 0.6); }
-  50% { box-shadow: 0 0 0 6px rgb(116 194 122 / 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgb(124 195 135 / 0.55); }
+  50% { box-shadow: 0 0 0 6px rgb(124 195 135 / 0); }
+}
+
+@keyframes scroll-cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+@keyframes hotspot {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.6); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -86,4 +153,5 @@ h1, h2, h3 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .grain { animation: none; }
 }

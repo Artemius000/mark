@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { JetBrains_Mono, Onest, Tektur } from "next/font/google";
+import { Cormorant_Garamond, JetBrains_Mono, Roboto_Flex } from "next/font/google";
 import "./globals.css";
 
-const tektur = Tektur({ subsets: ["latin", "cyrillic"], variable: "--font-tektur", display: "swap" });
-const onest = Onest({ subsets: ["latin", "cyrillic"], variable: "--font-onest", display: "swap" });
-const jetbrains = JetBrains_Mono({ subsets: ["latin", "cyrillic"], variable: "--font-jetbrains", display: "swap" });
+const flex = Roboto_Flex({ subsets: ["latin", "cyrillic"], axes: ["wdth", "opsz"], variable: "--font-flex", display: "swap" });
+const serif = Cormorant_Garamond({ subsets: ["latin", "cyrillic"], weight: ["400", "500"], style: ["italic"], variable: "--font-serif", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin", "cyrillic"], variable: "--font-jetbrains", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Момент — ателье обслуживания Porsche, BMW M и AMG",
@@ -12,13 +12,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0c0d0f",
+  themeColor: "#09090a",
   viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" className={`${tektur.variable} ${onest.variable} ${jetbrains.variable}`}>
+    <html lang="ru" className={`${flex.variable} ${serif.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );

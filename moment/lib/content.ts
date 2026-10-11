@@ -47,6 +47,7 @@ export const teardown: {
 
 export const services = [
   {
+    photo: "/photos/oil-service.webp",
     tag: "Регламент",
     title: "Техобслуживание",
     price: "от 24 000 ₽",
@@ -55,6 +56,7 @@ export const services = [
     items: ["Проверка по 86 пунктам", "Масло Mobil 1 0W-40, допуск A40", "Запись в сервисную книжку"],
   },
   {
+    photo: "/photos/gt-rs-black.webp",
     tag: "Тормоза",
     title: "Тормоза и карбон-керамика",
     price: "от 18 500 ₽",
@@ -63,6 +65,7 @@ export const services = [
     items: ["Замер износа до и после", "Прокачка ABS-блока сканером", "Притирка колодок на треке"],
   },
   {
+    photo: "/photos/bmw-m4.webp",
     tag: "Ходовая",
     title: "Подвеска и 3D-развал",
     price: "от 9 800 ₽",
@@ -71,6 +74,7 @@ export const services = [
     items: ["Люфт-детектор на подъёмнике", "Заводские или трековые углы", "Протокол в PDF"],
   },
   {
+    photo: "/photos/engine-belts.webp",
     tag: "Электрика",
     title: "Диагностика и кодирование",
     price: "от 6 500 ₽",
@@ -79,6 +83,7 @@ export const services = [
     items: ["Полный лог всех блоков", "Адаптации после ремонта", "Обновление ПО блоков"],
   },
   {
+    photo: "/photos/ppf-headlight.webp",
     tag: "Кузов",
     title: "Детейлинг и керамика",
     price: "от 65 000 ₽",
@@ -87,6 +92,7 @@ export const services = [
     items: ["Карта толщины ЛКП", "Трёхфазная полировка", "Керамика в два слоя, 3 года"],
   },
   {
+    photo: "/photos/tools-wall.webp",
     tag: "Сезон",
     title: "Хранение шин",
     price: "2 900 ₽ / мес",
@@ -124,3 +130,13 @@ export const stats = [
 ];
 
 export const brands = ["Porsche", "BMW M", "Mercedes-AMG", "Audi RS", "Lamborghini", "Bentley", "Range Rover", "Maserati"];
+
+// "This week in the bays": stock photography (Unsplash) captioned as a realistic job log.
+export const gallery = [
+  { src: "/photos/amg-gt.webp", w: 2000, h: 2846, car: "Mercedes-AMG GT R", job: "Замена тормозной жидкости, прокачка ABS", time: "1,5 ч" },
+  { src: "/photos/gt3-snow.webp", w: 2000, h: 1334, car: "Porsche 911 GT3 Touring", job: "Развал-схождение, трековые углы", time: "2 ч" },
+  { src: "/photos/audi-rs.webp", w: 2000, h: 2996, car: "Audi RS 6 Avant", job: "ТО-60 000, свечи и фильтры", time: "3 ч" },
+  { src: "/photos/wash-hand.webp", w: 2000, h: 1334, car: "Porsche Taycan", job: "Двухфазная мойка перед выдачей", time: "40 мин" },
+  { src: "/photos/under-hood.webp", w: 2000, h: 1126, car: "Приёмка", job: "Уровни и пробег при владельце", time: "18 мин" },
+  { src: "/photos/wash-splash.webp", w: 2000, h: 1126, car: "Nissan GT-R", job: "Мойка днища после зимы", time: "1 ч" },
+];

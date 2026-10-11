@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { animate, motion, useInView } from "framer-motion";
+import { animate, useInView } from "framer-motion";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { process, stats } from "@/lib/content";
 
@@ -12,8 +12,8 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
     if (!inView || !ref.current) return;
     const el = ref.current;
     const c = animate(0, value, {
-      duration: 1.6,
-      ease: [0.2, 0.8, 0.2, 1],
+      duration: 2,
+      ease: [0.16, 1, 0.3, 1],
       onUpdate: (v) => (el.textContent = Math.round(v).toLocaleString("ru-RU") + suffix),
     });
     return () => c.stop();
@@ -30,59 +30,56 @@ export default function Process() {
 
   useGSAP(
     () => {
-      gsap.fromTo(
-        ".line-fill",
-        { scaleX: 0 },
-        { scaleX: 1, ease: "none", scrollTrigger: { trigger: ".steps", start: "top 75%", end: "bottom 55%", scrub: true } },
-      );
-      gsap.fromTo(
-        ".line-fill-v",
-        { scaleY: 0 },
-        { scaleY: 1, ease: "none", scrollTrigger: { trigger: ".steps", start: "top 75%", end: "bottom 55%", scrub: true } },
-      );
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        gsap.utils.toArray<HTMLElement>(".step").forEach((el, i) => {
+          gsap.fromTo(el, { opacity: 0.18 }, { opacity: 1, ease: "none", scrollTrigger: { trigger: el, start: "top 75%", end: "top 45%", scrub: true } });
+          gsap.fromTo(`.pdot-${i}`, { scale: 0.4, backgroundColor: "rgba(198,161,91,0)" }, { scale: 1, backgroundColor: "rgba(198,161,91,1)", ease: "none", scrollTrigger: { trigger: el, start: "top 60%", end: "top 45%", scrub: true } });
+        });
+        gsap.fromTo(".pline", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ".steps", start: "top 60%", end: "bottom 60%", scrub: true } });
+      });
     },
     { scope: root },
   );
 
   return (
-    <section ref={root} id="process" className="px-4 py-[clamp(80px,12vw,160px)] sm:px-8 lg:px-14">
-      <p className="eyebrow text-gold">Как проходит визит</p>
-      <h2 className="font-display mt-3 max-w-[16ch] text-[clamp(2rem,5vw,4.4rem)] font-[800] uppercase leading-[0.95]">Пять шагов, ни одного сюрприза в счёте</h2>
-
-      <div className="steps relative mt-16">
-        <div className="absolute left-[11px] top-0 h-full w-px bg-white/10 lg:left-0 lg:top-[11px] lg:h-px lg:w-full">
-          <div className="line-fill-v h-full w-full origin-top bg-gold lg:hidden" />
-          <div className="line-fill hidden h-full w-full origin-left bg-gold lg:block" />
+    <section ref={root} id="process" className="bg-paper px-4 pb-[clamp(90px,12vw,170px)] text-carbon sm:px-8 lg:px-14">
+      <div className="grid gap-14 border-t border-carbon/15 pt-[clamp(70px,9vw,130px)] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
+        <div className="lg:sticky lg:top-32 lg:self-start">
+          <p className="eyebrow text-brass-deep">Как проходит визит</p>
+          <h2 data-reveal className="display mt-5 text-[clamp(2.2rem,5vw,4.8rem)]">
+            Пять шагов, <span className="serif-accent text-brass-deep">ни одного</span> сюрприза в счёте
+          </h2>
+          <p data-fade className="mt-6 max-w-[36ch] text-[15px] text-carbon/65">
+            Каждый шаг оставляет след: фото, замер или сообщение в Telegram. Если что-то пошло не по плану, вы узнаете об этом первым.
+          </p>
         </div>
-        <ol className="grid gap-10 lg:grid-cols-5 lg:gap-8">
+
+        <ol className="steps relative">
+          <span className="absolute bottom-0 left-[7px] top-0 w-px bg-carbon/12">
+            <span className="pline block h-full w-full origin-top bg-brass-deep" />
+          </span>
           {process.map((s, i) => (
-            <motion.li
-              key={s.title}
-              className="relative grid grid-cols-[24px_minmax(0,1fr)] gap-5 lg:grid-cols-1 lg:gap-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 0.6, delay: i * 0.08 }}
-            >
-              <span className="relative z-10 mt-1 h-[23px] w-[23px] rounded-full border-2 border-gold bg-carbon lg:mt-0" />
+            <li key={s.title} className="step relative grid grid-cols-[16px_minmax(0,1fr)] gap-7 pb-16 last:pb-0">
+              <span className={`pdot-${i} relative z-10 mt-3 h-[15px] w-[15px] rounded-full border border-brass-deep bg-paper`} />
               <div>
-                <span className="font-mono text-xs text-steel">Шаг {i + 1}</span>
-                <h3 className="font-display mt-2 text-2xl font-[700] uppercase">{s.title}</h3>
-                <p className="mt-2 max-w-[30ch] text-[15px] leading-relaxed text-fog">{s.text}</p>
+                <span className="font-mono text-xs text-carbon/45">Шаг 0{i + 1}</span>
+                <h3 className="display mt-2 text-[clamp(1.8rem,3.4vw,3rem)]">{s.title}</h3>
+                <p className="mt-3 max-w-[40ch] text-[15px] leading-relaxed text-carbon/65">{s.text}</p>
               </div>
-            </motion.li>
+            </li>
           ))}
         </ol>
       </div>
 
-      <dl className="mt-24 grid grid-cols-2 gap-x-6 gap-y-12 border-t border-white/10 pt-12 lg:grid-cols-4">
+      <dl className="mt-[clamp(80px,10vw,140px)] grid grid-cols-2 gap-x-6 gap-y-12 border-t border-carbon/15 pt-12 lg:grid-cols-4">
         {stats.map((s) => (
           <div key={s.label} className="min-w-0">
             <dt className="sr-only">{s.label}</dt>
-            <dd className="font-display text-[clamp(2.4rem,6vw,5rem)] font-[800] leading-none text-paper">
+            <dd className="display text-[clamp(2.4rem,5.6vw,5rem)] leading-none">
               <Counter value={s.value} suffix={s.suffix} />
             </dd>
-            <p className="mt-3 max-w-[22ch] text-sm text-fog">{s.label}</p>
+            <p className="mt-4 max-w-[22ch] text-sm text-carbon/60">{s.label}</p>
           </div>
         ))}
       </dl>

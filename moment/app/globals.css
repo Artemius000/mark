@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* Layout: dark studio hero with a pinned 3D teardown → manifesto → horizontal service rail → paper "vs dealer" sheet → process → booking → wordmark footer */
+@theme inline {
+  --color-carbon: #0c0d0f;
+  --color-graphite: #16181b;
+  --color-ash: #23262b;
+  --color-steel: #8d929a;
+  --color-fog: #b9bdc4;
+  --color-paper: #ecebe6;
+  --color-bone: #d8d5cd;
+  --color-gold: #d4a649;
+  --color-gold-deep: #9c7426;
+  --color-ok: #74c27a;
+  --color-warn: #e3a63c;
+  --color-bad: #e8634f;
+
+  --font-display: var(--font-tektur), "Arial Narrow", system-ui, sans-serif;
+  --font-sans: var(--font-onest), "Segoe UI", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, Menlo, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-carbon);
+}
+
+body {
+  background: var(--color-carbon);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-carbon);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(116 194 122 / 0.6); }
+  50% { box-shadow: 0 0 0 6px rgb(116 194 122 / 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

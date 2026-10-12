@@ -1,0 +1,14 @@
+{
+  "name": "artemius-mods",
+  "owner": {
+    "name": "artemius000"
+  },
+  "description": "Моды Claude Code от artemius000.",
+  "plugins": [
+    {
+      "name": "token-router",
+      "source": "./claude-mods/token-router",
+      "description": "Автовыбор модели и усилия под сложность задачи с учётом кэша — экономия токенов."
+    }
+  ]
+}

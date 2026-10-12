@@ -1,0 +1,50 @@
+{
+  "name": "token-router",
+  "version": "0.1.0",
+  "description": "Picks the model and effort for each prompt by how hard the task is, and only switches when the saving beats the prompt-cache cost.",
+  "author": {
+    "name": "artemius000"
+  },
+  "userConfig": {
+    "maxModel": {
+      "type": "string",
+      "title": "Strongest model",
+      "description": "The most capable (and expensive) model the router may choose.",
+      "default": "opus",
+      "options": [
+        "haiku",
+        "sonnet",
+        "opus",
+        "fable"
+      ]
+    },
+    "minModel": {
+      "type": "string",
+      "title": "Cheapest model",
+      "description": "The cheapest model the router may choose.",
+      "default": "haiku",
+      "options": [
+        "haiku",
+        "sonnet",
+        "opus",
+        "fable"
+      ]
+    },
+    "classifier": {
+      "type": "string",
+      "title": "Classifier",
+      "description": "auto: rules first, a Haiku call for unclear prompts. rules: never calls a model.",
+      "default": "auto",
+      "options": [
+        "auto",
+        "rules"
+      ]
+    },
+    "cacheTtlMinutes": {
+      "type": "number",
+      "title": "Prompt cache lifetime (minutes)",
+      "description": "How long a model's cached context stays warm; used to price a switch back.",
+      "default": 5
+    }
+  }
+}
